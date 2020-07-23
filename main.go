@@ -1,13 +1,13 @@
 package main
 
-import "fmt"
-
-func sum(a int, b int) int {
-	return a + b
-}
+import "github.com/gin-gonic/gin"
 
 func main() {
-	sum := sum(3, 4)
-	fmt.Println("sum value is", sum)
-	fmt.Println("moviefan welcome")
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
