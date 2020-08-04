@@ -2,13 +2,20 @@ package main
 
 import (
 	"fmt"
-
 	"github.com/gin-gonic/gin"
-	"gopkg.in/mgo.v2/bson"
 )
+
+func Cors() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        c.Header("Access-Control-Allow-Origin", "*")
+
+        c.Next()
+    }
+}
 
 func main() {
 	r := gin.Default()
+	r.Use(Cors())
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
@@ -24,8 +31,8 @@ func main() {
 	r.GET("/get", func(c *gin.Context) {
 		//查询数据库,随机返回一条数据
 		movie := Movie{}
-
-		err := movie.get(bson.ObjectIdHex("5f2283b27b046edc980d517d"))
+		name := c.Query("name")
+		err := movie.get(name)
 		if err != nil {
 			fmt.Println("查询失败", err)
 		}

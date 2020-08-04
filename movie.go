@@ -98,10 +98,10 @@ func (a *Movie) random() Movie {
 
 }
 
-func (a *Movie) get(id bson.ObjectId) error {
+func (a *Movie) get(name string) error {
 	s, c := connect("db_movie")
 	defer s.Close()
-	err := c.Find(bson.M{"_id": id}).One(&a)
+	err := c.Find(bson.M{"name": name}).One(&a)
 	if err != nil {
 		fmt.Println("mongo get error", err)
 	}
@@ -118,6 +118,6 @@ func (a *Movie) delete(id bson.ObjectId) error {
 func (a *Movie) update() error {
 	s, c := connect("movie")
 	defer s.Close()
-	c.Update(bson.M{"_id": a.ID}, a)
-	return a.get(a.ID)
+	c.Update(bson.M{"_id": a.Name}, a)
+	return a.get(a.Name)
 }
