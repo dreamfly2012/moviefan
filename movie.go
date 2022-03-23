@@ -23,7 +23,7 @@ func connect(cName string) (*mgo.Session, *mgo.Collection) {
 	//c := &MongoDialInfo{}
 	var c Config
 	file := "./config.yaml"
-	viper.SetConfigType("yaml")
+    viper.SetConfigType("yaml")
 	viper.SetConfigFile(file)
 	err := viper.ReadInConfig()
 	if err != nil {
